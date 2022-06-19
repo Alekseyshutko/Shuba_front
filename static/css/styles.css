@@ -81,23 +81,23 @@ ul.list-articles li {
 }
 
 .logo {
-	background: url('../images/logo.png') no-repeat 10px 5px;
-	width: 70px;
-	height: 60px;
+	background: url('../images/shuba.ico') no-repeat 0px 0px;
+	width: 370px;
+	height: 210px;
 }
 
 ul.mainmenu {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	height: 60px;
+	height: 200px;
 	color: #fdc073;
 	font-size: 20px;
 	overflow: hidden;
 }
 ul.mainmenu li {
 	float: left;
-	margin: 18px 40px 0 30px;
+	margin: 18px 60px 0 30px;
 }
 ul.mainmenu li.logo {margin: 0;}
 ul.mainmenu li.last {float: right;}
