@@ -1,14 +1,16 @@
-from flask import Flask
-import requests
-from flask import render_template
+from flask import Flask, request
+from flask import render_template, redirect, url_for, make_response
 
 app = Flask(__name__)
-menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
+
+
+
 
 @app.route("/")
 def index():
-    return render_template('base.html', title='Главная страница', menu=menu)
+    return render_template('index.html')
 
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     app.run(debug=True)
