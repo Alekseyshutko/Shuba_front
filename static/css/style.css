@@ -105,13 +105,13 @@ a:hover{
 	font-size:20px;
 }
 .menu .current a, .menu li:hover > a{
-	color:#2684cd;
+	color:#253374;
 }
 .menu ul li:hover a, .menu li:hover li a{
 	color:#555;
 }
 .menu ul a:hover{
-	background:#2684cd !important;
+	background:#253374 !important;
 	color:#fff !important;
 }
 .menu ul{
@@ -490,3 +490,49 @@ float:right;
 	padding:15px 0 50px 0;
 	width:100%;
 }
+
+.main-heading {
+margin-top: 0;
+font-weight: 600;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px #0000000d;
+    margin-bottom: 20px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: flex-start;
+
+}
+.sidebar {
+    margin-right: 20px;
+    min-width: 200px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px #0000000d;
+}
+.sidebar h4 {
+    padding: 15px;
+    border-bottom: 1px solid #D5D5D5;
+}
+.list-item a {
+    display:block;
+    padding: 15px;
+    font-size: 16px;
+    color: #555;
+}
+.list-item a:hover {
+    cursor: pointer;
+    color: #fff;
+    background:#253374;
+}
+.card-wrapper {
+    width: 100%;
+
+}
+
