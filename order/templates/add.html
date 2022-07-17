@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+<body>
+{% block content %}
+    {{ session["user"] }}
+    <h1>Register</h1>
+
+    <form action="{{ url_for('user.register') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div>{{ form.name.label }}</div>
+        <div>{{ form.name }}</div>
+        <div>{{ form.title.label }}</div>
+        <div>{{ form.title }}</div>
+        <div>{{ form.description.label }}</div>
+        <div>{{ form.description }}</div>
+        <div>{{ form.city.label }}</div>
+        <div>{{ form.city }}</div>
+        <div>{{ form.phoneNumber.label }}</div>
+        <div>{{ form.phoneNumber }}</div>
+        <div>{{ form.photo.label }}</div>
+        <div>{{ form.photo }}</div>
+        <div>{{ form.price.label }}</div>
+        <div>{{ form.price }}</div>
+        <div>{{ form.date_finish.label }}</div>
+        <div>{{ form.date_finish }}</div>
+        <div>{{ form.submit }}</div>
+
+
+    </form>
+{% endblock %}
+</body>
+</html>
