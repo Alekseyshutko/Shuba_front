@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.register_blueprint(user_blueprint, url_prefix='/user')
 app.register_blueprint(order_blueprint, url_prefix='/order')
 app.config['SECRET_KEY'] = 'SECRET_KEY'
+API = "http://127.0.0.1:8000"
 
 @app.route("/")
 def index():
@@ -17,7 +18,7 @@ def index():
 
 @app.route("/repair", methods=["GET", "POST"])
 def repair():
-    a = requests.get('http://127.0.0.1:8000/order/api/order/').json()
+    a = requests.get(f'{API}/order/api/order/').json()
 
     return render_template('repair.html', a=a)
 
