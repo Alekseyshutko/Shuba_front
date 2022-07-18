@@ -8,8 +8,8 @@
     <form action="{{ url_for('user.login') }}" method="POST">
         {{ form.hidden_tag() }}
 
-        <div>{{ form.email.label }}</div>
-        <div>{{ form.email }}</div>
+        <div>{{ form.username.label }}</div>
+        <div>{{ form.username }}</div>
         <div>{{ form.password.label }}</div>
         <div>{{ form.password }}</div>
         <div>{{ form.submit }}</div>
