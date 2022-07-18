@@ -7,11 +7,13 @@ from .models import RegisterUser
 user_blueprint = Blueprint("user", __name__, template_folder="templates",
                            static_folder="static",
                            url_prefix='/user', )
+API = "http://127.0.0.1:8000"
+
 
 
 def create_user(*args, **kwargs):
     register_user = RegisterUser(**kwargs)
-    res = requests.post('http://127.0.0.1:8000/auth/users/', json=register_user.dict())
+    res = requests.post(f'{API}/auth/users/', json=register_user.dict())
     return res
 
 
