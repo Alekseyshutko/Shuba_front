@@ -4,11 +4,11 @@ from .utils import access, get_current_user
 from user.form import RegisterUserForm, LoginForm
 from .models import RegisterUser
 
+
 user_blueprint = Blueprint("user", __name__, template_folder="templates",
                            static_folder="static",
                            url_prefix='/user', )
 API = "http://127.0.0.1:8000"
-
 
 
 def create_user(*args, **kwargs):

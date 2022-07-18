@@ -18,9 +18,14 @@ def index():
 
 @app.route("/repair", methods=["GET", "POST"])
 def repair():
-    a = requests.get(f'{API}/order/api/order/').json()
+    filter_spec = request.args.get("speciality")
+    if filter_spec:
+        a = requests.get(f'{API}/order/api/order/?speciality={filter_spec}').json()
+    else:
+        a = requests.get(f'{API}/order/api/order/').json()
+    b = requests.get(f'{API}/order/api/specialityorder/').json()
 
-    return render_template('repair.html', a=a)
+    return render_template('repair.html', a=a, b=b)
 
 
 
