@@ -31,6 +31,7 @@ class ErrorModel(PyModel):
 
 class RegisterUser(BaseModel):
     email: str
+    username: str
     password: str
     password_submit: str
 
@@ -39,6 +40,9 @@ class RegisterUser(BaseModel):
         if "password" in values and v != values["password"]:
             raise ValueError("passwords do not match")
         return v
+
+    class Config:
+        extra = Extra.ignore
 
 
 class Login(BaseModel):
@@ -55,6 +59,8 @@ class Auth(StoreInSessionMixin, BaseModel):
 
 
 class User(StoreInSessionMixin, BaseModel):
-    email: str
+    username: str
+    email: EmailStr
+
     is_active: bool = True
     is_superuser: bool = False

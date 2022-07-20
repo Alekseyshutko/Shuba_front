@@ -26,13 +26,14 @@
         </li>
         <li><a href=#>Исполнители</a></li>
         <li><a href='/user/register'>Регистрация</a></li>
+        </ul>
         {% if not session["user"] %}
           <li><a href='user/login'>Войти</a></li>
         {% else %}
-          <li><a href='user/logout'>Logout</a></li>
+          <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
           <li>{{ session["user"] }}</li>
         {% endif %}
-      </ul>
+
     </div>
     <!--end nav-->
   </div>

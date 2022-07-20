@@ -3,9 +3,9 @@
 <body>
 {% block content %}
     {{ session["user"] }}
-    <h1>Register</h1>
+    <h1>ORDER</h1>
 
-    <form action="{{ url_for('user.register') }}" method="POST">
+    <form action="{{ url_for('order.add') }}" method="POST">
         {{ form.hidden_tag() }}
         <div>{{ form.name.label }}</div>
         <div>{{ form.name }}</div>
@@ -24,8 +24,6 @@
         <div>{{ form.date_finish.label }}</div>
         <div>{{ form.date_finish }}</div>
         <div>{{ form.submit }}</div>
-
-
     </form>
 {% endblock %}
 </body>
