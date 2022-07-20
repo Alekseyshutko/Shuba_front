@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, DateField
+from wtforms import FileField, StringField, DateField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 
 
@@ -53,3 +53,5 @@ class OrderForm(FlaskForm):
         ],
     )
     date_finish = DateField("End Date", format="%m/%d/%Y")
+
+    submit = SubmitField("Оставить заказ")

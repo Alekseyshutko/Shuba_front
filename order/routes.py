@@ -18,7 +18,7 @@ def add_order(*args, **kwargs):
 
 
 @order_blueprint.route("/add", methods=["GET", "POST"])
-def register():
+def add():
     form = OrderForm()
     if request.method == "POST":
         order = add_order(**form.data)

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+<body>
+{% block content %}
+
+    <h1>{{ session["user"]["email"] }}</h1>
+    <h2>Мои заказы</h2>
+<form action='order/add' style="text-align: center"><button>Оставить заказ</button>
+</form>
+
+{% endblock %}
+</body>

@@ -17,7 +17,6 @@ CREATE_USER_URL = f"{Config.API_URL}/api/users/"
 def access(*args, **kwargs) -> Auth:
     login = Login(**kwargs)
     res = requests.post(LOGIN_URL, json=login.dict())
-    print(res.json())
     # check_response_errors(res, 200)
     auth = Auth(**res.json())
     return auth
@@ -76,4 +75,5 @@ def create_user(*args, **kwargs) -> User:
     res = requests.post(CREATE_USER_URL, json=register_user.dict())
     # check_response_errors(res, 201)
     user = User(**res.json())
+    print(user)
     return user
