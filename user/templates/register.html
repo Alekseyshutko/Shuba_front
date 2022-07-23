@@ -7,8 +7,7 @@
 
     <form action="{{ url_for('user.register') }}" method="POST">
         {{ form.hidden_tag() }}
-        <div>{{ form.username.label }}</div>
-        <div>{{ form.username }}</div>
+
         <div>{{ form.email.label }}</div>
         <div>{{ form.email }}</div>
         <div>{{ form.password.label }}</div>
