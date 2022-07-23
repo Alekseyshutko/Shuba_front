@@ -4,12 +4,7 @@ from wtforms.validators import DataRequired, EqualTo
 
 
 class RegisterUserForm(FlaskForm):
-    username = StringField(
-        "username",
-        validators=[
-            DataRequired(),
-        ],
-    )
+
     email = EmailField(
         "Email",
         validators=[
@@ -33,7 +28,7 @@ class RegisterUserForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField(
+    email = StringField(
         "email",
         validators=[
             DataRequired(),

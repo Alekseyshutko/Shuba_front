@@ -31,7 +31,6 @@ class ErrorModel(PyModel):
 
 class RegisterUser(BaseModel):
     email: str
-    username: str
     password: str
     password_submit: str
 
@@ -46,7 +45,7 @@ class RegisterUser(BaseModel):
 
 
 class Login(BaseModel):
-    username: str
+    email: EmailStr
     password: str
 
     class Config:
@@ -59,7 +58,7 @@ class Auth(StoreInSessionMixin, BaseModel):
 
 
 class User(StoreInSessionMixin, BaseModel):
-    username: str
+
     email: EmailStr
 
     is_active: bool = True
