@@ -53,7 +53,10 @@ def logout():
     return redirect(url_for("index"))
 
 
-@user_blueprint.route('/<username>', methods=["GET", "POST"])
-def user(username):
-    print(session['user']['id'])
+@user_blueprint.route('/me', methods=["GET", "POST"])
+def user():
+    user = session.get("user")
+    if user is None:
+        user = get_current_user()
+        user.store_in_session()
     return render_template('user.html', user=user)

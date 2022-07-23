@@ -25,7 +25,11 @@
 
         </li>
         <li><a href=#>Исполнители</a></li>
+        {% if not session["user"] %}
         <li><a href='/user/register'>Регистрация</a></li>
+        {% else %}
+        <li><a href="{{ url_for('user.user')}}">Личный кабинет</a></li>
+        {% endif %}
         </ul>
         {% if not session["user"] %}
           <li><a href='user/login'>Войти</a></li>

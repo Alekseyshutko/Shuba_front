@@ -4,12 +4,12 @@ from wtforms.validators import DataRequired, EqualTo
 
 
 class OrderForm(FlaskForm):
-    user = StringField(
-        "username",
-        validators=[
-            DataRequired(),
-        ],
-    )
+    # user = StringField(
+    #     "username",
+    #     validators=[
+    #         DataRequired(),
+    #     ],
+    # )
     title = StringField(
         "title",
         validators=[
@@ -52,6 +52,6 @@ class OrderForm(FlaskForm):
             DataRequired(),
         ],
     )
-    date_finish = DateField("End Date", format="%m/%d/%Y")
+    # date_finish = DateField("End Date", format="%m/%d/%Y")
 
     submit = SubmitField("Оставить заказ")

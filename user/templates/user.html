@@ -3,9 +3,9 @@
 <body>
 {% block content %}
 
-    <h1>{{ session["user"]["email"] }}</h1>
+    <h1>{{ user.email }}</h1>
     <h2>Мои заказы</h2>
-<form action='order/add' style="text-align: center"><button>Оставить заказ</button>
+<form action="{{ url_for('order.add')}}" style="text-align: center"><button>Оставить заказ</button>
 </form>
 
 {% endblock %}

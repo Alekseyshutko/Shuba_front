@@ -9,7 +9,7 @@
     <ul class="list-item">
         {% for c in b %}
         <h2>
-            <a href="{{ url_for('repair') }}?speciality={{ c.id }}">{{ c.title }}</a>
+            <a href="{{ url_for('order.repair') }}?speciality={{ c.id }}">{{ c.title }}</a>
         </h2>
      {% endfor %}
     </ul>
