@@ -33,3 +33,5 @@ class ContactForm(FlaskForm):
     )
 
     submit = SubmitField("Отправить сообщение")
+
+
