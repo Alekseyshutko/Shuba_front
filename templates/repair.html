@@ -17,7 +17,7 @@
 {% for p in a %}
     <div class="card-wrapper">
         <div class="card">
-        <h2>{{ p.title }}</h2>
+        <h2> <a href="{{ url_for('order.one_order', id=p.id)}}">{{ p.title }} </a></h2>
         <p>{{p.description}}</p>
         <p>{{p.price}}</p>
     </div>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, DateField, SubmitField
+from wtforms import FileField, StringField, DateField, SubmitField, SelectField
 from wtforms.validators import DataRequired, EqualTo
 
 
@@ -34,7 +34,7 @@ class OrderForm(FlaskForm):
             DataRequired(),
         ],
     )
-    phoneNumber = StringField(
+    phonenumber = StringField(
         "phone",
         validators=[
             DataRequired(),
@@ -52,6 +52,13 @@ class OrderForm(FlaskForm):
             DataRequired(),
         ],
     )
-    # date_finish = DateField("End Date", format="%m/%d/%Y")
-
+    date_finish = DateField("End Date", format='%Y-%m-%d')
+    speciality = SelectField("специализация", choices=[1, 2])
     submit = SubmitField("Оставить заказ")
+
+
+class CommentForm(FlaskForm):
+    body = StringField("Ваш комментарий", validators=[
+            DataRequired(),
+        ],)
+    submit = SubmitField("Оставить комментарий")

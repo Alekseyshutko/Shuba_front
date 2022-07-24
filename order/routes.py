@@ -1,7 +1,10 @@
-from flask import Blueprint, redirect, render_template, url_for, request
-from .forms import OrderForm
+from flask import Blueprint, redirect, render_template, url_for, request, session
+
+from user.utils import get_current_user
+from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
 import requests
+from order.utils import order_add, comment_add
 
 order_blueprint = Blueprint(
     "order",
@@ -13,25 +16,22 @@ order_blueprint = Blueprint(
 API = "http://127.0.0.1:8000"
 
 
-def add_order(*args, **kwargs):
-    res = requests.post(f"{API}/order/api/order/")
-    return res
-
-
 @order_blueprint.route("/add", methods=["GET", "POST"])
 def add():
     form = OrderForm()
     if form.validate_on_submit():
+        user = get_current_user()
+        user.store_in_session()
         form_data = dict(form.data)
         form_data.pop("photo")
-        print(request.form)
-        print(request.files)
+        # print(request.form)
+        # print(request.files)
         photo = form.photo.data
         link = upload_file_to_s3(photo)
-        print(link)
+        # print(link)
         form_data["photo"] = link
-        # order = add_order(**form_data)
-        print(form_data)
+        order = order_add(**form_data)
+        print(order)
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
 
@@ -46,3 +46,22 @@ def repair():
     b = requests.get(f"{API}/order/api/specialityorder/").json()
 
     return render_template("repair.html", a=a, b=b)
+
+
+@order_blueprint.route("/<int:id>", methods=["GET", "POST"])
+def one_order(id):
+    var = requests.get(f"{API}/order/api/order/").json()
+    order = var[id - 1]
+    com = requests.get(f'{API}/order/api/order_comments/').json()
+    comments = []
+    for i in range(len(com)):
+        if com[i]['order'] == order['id']:
+            comments.append(com[i])
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        user = get_current_user()
+        user.store_in_session()
+        form_data = dict(form.data)
+        comment_add(**form_data)
+    return render_template("one_order.html", order=order, comments=comments, form=form)

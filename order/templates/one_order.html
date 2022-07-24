@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+<body>
+{% block content %}
+{{ super() }}
+
+
+    <div class="card-wrapper">
+        <div class="card">
+        <h2> {{ order.title }} </h2>
+        <p>{{order.description}}</p>
+        <p>{{order.name}}</p>
+        <p>{{order.phoneNumber}}</p>
+        <p>{{order.city}}</p>
+        <p>{{order.date_finish}}</p>
+        <p>{{order.price}}</p>
+
+    </div>
+
+        <div class="card-wrapper">
+        <div class="card">
+            {% for p in comments %}
+            <p>{{p.user}}</p>
+            <h4>{{p.body}}</h4>
+            <p>{{p.updated}}</p>
+            {% endfor %}
+
+<form method="POST" enctype="multipart/form-data">
+        {{form.errors}}
+        {{ form.hidden_tag() }}
+        <div>{{ form.body.label }}</div>
+        <div>{{ form.body }}</div>
+        <div>{{ form.submit }}</div>
+
+    </div>
+    </div>
+
+{% endblock %}
+</body>>
