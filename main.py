@@ -11,15 +11,18 @@ app.config.from_object(Config)
 app.register_blueprint(user_blueprint, url_prefix="/user")
 app.register_blueprint(order_blueprint, url_prefix="/order")
 app.register_blueprint(contact_blueprint, url_prefix="/contact")
-API = "http://127.0.0.1:8000"
+
 
 
 @app.route("/")
 def index():
-    order = requests.get(f"{API}/order/api/order/").json()
-    executor = requests.get(f"{API}/api/executor/").json()
-    speciality = requests.get(f"{API}/api/speciality/").json()
+    order = requests.get(f"{Config.API_URL}/order/api/order/").json()
+    executor = requests.get(f"{Config.API_URL}/api/executor/").json()
+    speciality = requests.get(f"{Config.API_URL}/api/speciality/").json()
     return render_template("index.html", order=order, executor=executor, speciality=speciality )
+
+
+
 
 
 if __name__ == "__main__":
