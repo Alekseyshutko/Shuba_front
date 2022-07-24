@@ -12,9 +12,8 @@ app.config.from_object(Config)
 app.register_blueprint(user_blueprint, url_prefix="/user")
 app.register_blueprint(order_blueprint, url_prefix="/order")
 app.register_blueprint(contact_blueprint, url_prefix="/contact")
+
 app.register_blueprint(executor_blueprint, url_prefix="/executor")
-
-
 
 
 
