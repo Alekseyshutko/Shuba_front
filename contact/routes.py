@@ -18,7 +18,7 @@ API = "http://127.0.0.1:8000"
 def cont():
     form = ContactForm()
     if request.method == "POST":
-        user = create_contact(**form.data)
+        contakt = create_contact(**form.data)
 
         return redirect(url_for("index"))
     return render_template("contact.html", form=form)
