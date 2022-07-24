@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, DateField, SubmitField, EmailField
-from wtforms.validators import DataRequired, EqualTo
+from wtforms import StringField,  SubmitField, EmailField
+from wtforms.validators import DataRequired
 
 
 class ContactForm(FlaskForm):
