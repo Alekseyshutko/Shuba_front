@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+<body>
+{% block content %}
+
+    <h1>Contact</h1>
+
+    <form action="{{ url_for('contact.cont') }}" method="POST" enctype="multipart/form-data">
+        {{form.errors}}
+        {{ form.hidden_tag() }}
+
+        <div>{{ form.first_name.label }}</div>
+        <div>{{ form.first_name }}</div>
+        <div>{{ form.last_name.label }}</div>
+        <div>{{ form.last_name }}</div>
+        <div>{{ form.email.label }}</div>
+        <div>{{ form.email }}</div>
+        <div>{{ form.message.label }}</div>
+        <div>{{ form.message }}</div>
+
+
+        <div>{{ form.submit }}</div>
+    </form>
+{% endblock %}
+</body>
+</html>
