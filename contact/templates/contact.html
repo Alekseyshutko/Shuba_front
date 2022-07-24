@@ -4,12 +4,13 @@
 {% block content %}
 
     <h1>Contact</h1>
+    <div class = center>
 
     <form action="{{ url_for('contact.cont') }}" method="POST" enctype="multipart/form-data">
-        {{form.errors}}
+
         {{ form.hidden_tag() }}
 
-        <div>{{ form.first_name.label }}</div>
+        <div class = center>{{ form.first_name.label }}</div>
         <div>{{ form.first_name }}</div>
         <div>{{ form.last_name.label }}</div>
         <div>{{ form.last_name }}</div>
@@ -21,6 +22,15 @@
 
         <div>{{ form.submit }}</div>
     </form>
+    </div>
+<!--end frontpage-main-->
+<div id="featured-section">
+<div id="circles"><img class="first" src="static/images/clean1.png" /> <img src="static/images/built1.png" /> <img src="static/images/reparing.png" /> <img src="static/images/mover2.png" /> </div>
+  <div id="footer">
+      <p> 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
+  </div>
+  </div>>
 {% endblock %}
+
 </body>
 </html>
