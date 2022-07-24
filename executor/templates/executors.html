@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<body>
+{% block content %}
+{{ super() }}
+<h2 class="main-heading">Поиск исполнителей</h2>
+<div class="wrapper">
+<sidebar class="sidebar">
+    <h4>Все категории</h4>
+    <ul class="list-item">
+        {% for c in b %}
+        <h2>
+            <a href="{{ url_for('executor.exec') }}?speciality={{ c.id }}">{{ c.title }}</a>
+        </h2>
+     {% endfor %}
+    </ul>
+</sidebar>
+{% for p in a %}
+    <div class="card-wrapper">
+        <div class="card">
+        <h2>{{ p.first_name }}</h2>
+        <p>{{p.last_name}}</p>
+        <p>{{p.city}}</p>
+    </div>
+{% endfor %}
+
+    </div>
+    </div>
+
+
+{% endblock %}
+</body>>
