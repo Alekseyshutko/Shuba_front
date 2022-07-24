@@ -5,14 +5,14 @@ from wtforms.validators import DataRequired, EqualTo
 
 class ContactForm(FlaskForm):
     first_name = StringField(
-        "title",
+        "Имя",
         validators=[
             DataRequired(),
         ],
     )
 
     last_name = StringField(
-        "title",
+        "Фамилия",
         validators=[
             DataRequired(),
         ],
