@@ -7,13 +7,82 @@
     <!--end circles-->
     <div id="image-slider">
       <ul id="mycarousel" class="jcarousel-skin-tango">
-        <li class="first"><a href="#"><p> order1</a></li>
-        <li><a href="#">order2</a></li>
-        <li><a href="#">order3</a></li>
 
-        <li><a href="#">executor1</a></li>
-        <li><a href="#">executor2</a></li>
-        <li><a href="#">executor3</a></li>
+        <li class="first">
+          <div class="cardir-wrapper">
+        <div class="cardir">
+          {% if not session["user"] %}
+          <p>{{ order[0].title }}</p>
+          {% else %}
+          <a href="#"><p>{{ order[0].title }}</p></a>
+          {% endif %}
+
+          <p>{{order[0].description}}</p>
+          <p>{{order[0].price}}</p>
+        </li>
+        <li class="first">
+          <div class="cardir-wrapper">
+        <div class="cardir">
+
+           {% if not session["user"] %}
+          <p>{{ order[1].title }}</p>
+          {% else %}
+          <a href="#"><p>{{ order[1].title }}</p></a>
+          {% endif %}
+          <p>{{order[1].description}}</p>
+          <p>{{order[1].price}}</p>
+        </li>
+
+
+          <li class="first">
+          <div class="cardir-wrapper">
+        <div class="cardir">
+
+           {% if not session["user"] %}
+          <p>{{ order[2].title }}</p>
+          {% else %}
+          <a href="#"><p>{{ order[2].title }}</p></a>
+          {% endif %}
+          <p>{{order[2].description}}</p>
+          <p>{{order[2].price}}</p>
+        </li>
+
+
+        </li>
+
+      <li><div class="cardir-wrapper">
+        <div class="cardir">
+          {% if not session["user"] %}
+          <p>{{ executor[0].first_name }}</p>
+          {% else %}
+          <a href="#"><p>{{ executor[0].first_name }}</p></a>
+          {% endif %}
+          <p>{{speciality[0].title}}</p></li>
+
+
+         <li><div class="cardir-wrapper">
+        <div class="cardir">
+          {% if not session["user"] %}
+          <p>{{ executor[1].first_name }}</p>
+          {% else %}
+          <a href="#"><p>{{ executor[1].first_name }}</p></a>
+          {% endif %}
+          <p>{{speciality[1].title}}</p></li>
+
+
+        <li><div class="cardir-wrapper">
+        <div class="cardir">
+          {% if not session["user"] %}
+          <p>{{ executor[2].first_name }}</p>
+          {% else %}
+          <a href="#"><p>{{ executor[2].first_name }}</p></a>
+          {% endif %}
+          <p>{{speciality[1].title}}</p></li>
+
+
+
+
+
 
 
 
@@ -45,6 +114,10 @@
   <!--end frontpage-main-->
   <div id="footer">
     <p>&copy; 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
+
+
+
+    </div>
   </div>
   <!--end footer-->
 </div>
