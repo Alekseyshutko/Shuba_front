@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for, request
-from contact.forms import ContactForm
+from executor.forms import ExecutorForm
 from contact.utils import create_contact
 import requests
 
@@ -24,3 +24,20 @@ def exec():
     b = requests.get(f"{API}/api/speciality/").json()
 
     return render_template("executors.html", a=a, b=b)
+
+
+@executor_blueprint.route("/addexecutor", methods=["GET", "POST"])
+def add_executor():
+    form = ExecutorForm()
+    if form.validate_on_submit():
+        form_data = dict(form.data)
+        form_data.pop("photo")
+        print(request.form)
+        print(request.files)
+        photo = form.photo.data
+
+
+
+        print(form_data)
+        return redirect(url_for("index"))
+    return render_template("add_executor.html", form=form)
