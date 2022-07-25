@@ -34,7 +34,7 @@ class OrderForm(FlaskForm):
             DataRequired(),
         ],
     )
-    phonenumber = StringField(
+    phoneNumber = StringField(
         "phone",
         validators=[
             DataRequired(),

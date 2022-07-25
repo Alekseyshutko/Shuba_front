@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for, request, session
-
+import json
 from user.utils import get_current_user
 from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
@@ -25,13 +25,22 @@ def add():
         form_data = dict(form.data)
         form_data.pop("photo")
         # print(request.form)
+
         # print(request.files)
+        form_data['date_finish'] = str(form_data["date_finish"])
+
         photo = form.photo.data
         link = upload_file_to_s3(photo)
         # print(link)
         form_data["photo"] = link
+        # print(form_data)
+        form_data['speciality'] = list(form_data['speciality'])
+        form_data['user'] = int(user.id)
+        # form_data = json.dumps(form_data)
+
+        # print(form_data)
         order = order_add(**form_data)
-        print(order)
+        # print(order)
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
 

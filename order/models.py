@@ -3,36 +3,37 @@ from typing import Optional
 from pydantic import BaseModel as PyModel, Extra
 
 
-class BaseModel(PyModel):
-    id: Optional[int]
-    created: Optional[datetime]
-    modified: datetime = None
+# class BaseModel(PyModel):
+#     id: Optional[int]
+#     created: Optional[datetime]
+#     modified: datetime = None
+#
+#     def dict_without_none(self, **kwargs):
+#         return self.dict(exclude_none=True, **kwargs)
 
-    def dict_without_none(self, **kwargs):
-        return self.dict(exclude_none=True, **kwargs)
 
-
-class OrderAdd(BaseModel):
+class OrderAdd(PyModel):
+    user: int
     title: str
     description: str
     city: str
     name: str
-    phonenumber: str
+    phoneNumber: str
     price: float
-    date_finish: date
-    speciality: str
+    date_finish: str
+    speciality: list
     photo: str
 
     class Config:
         extra = Extra.ignore
 
 
-class Order(BaseModel):
+class Order(PyModel):
     pass
 
 
-class CommentAdd(BaseModel):
+class CommentAdd(PyModel):
     body = str
 
-class Comment(BaseModel):
+class Comment(PyModel):
     pass
