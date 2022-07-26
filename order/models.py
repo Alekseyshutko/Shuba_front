@@ -22,7 +22,6 @@ class OrderAdd(PyModel):
     price: float
     date_finish: str
     speciality: list
-    photo: str
 
     class Config:
         extra = Extra.ignore
@@ -33,7 +32,24 @@ class Order(PyModel):
 
 
 class CommentAdd(PyModel):
-    body = str
+    body: str
+    order: int
+    user: int
+    is_active: bool
+
+
+    class Config:
+        extra = Extra.ignore
+
 
 class Comment(PyModel):
+    pass
+
+
+class AddPhoto(PyModel):
+    order: int
+    photo: str
+
+
+class Photo(PyModel):
     pass
