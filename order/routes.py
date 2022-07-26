@@ -23,17 +23,18 @@ def add():
         user = get_current_user()
         user.store_in_session()
         form_data = dict(form.data)
-        form_data.pop("photo")
         form_data['date_finish'] = str(form_data["date_finish"])
-        photo = form.photo.data
-        link = upload_file_to_s3(photo)
-        form_data["photo"] = link
         form_data['speciality'] = list(form_data['speciality'])
         form_data['user'] = int(user.id)
         order_add(**form_data)
-        form_data['order'] = order_id()
-        print(form_data['order'])
-        photo_add(**form_data)
+        if form_data['photo']:
+            form_data.pop("photo")
+            photo = form.photo.data
+            link = upload_file_to_s3(photo)
+            form_data["photo"] = link
+            form_data['order'] = order_id()
+            print(form_data)
+            photo_add(**form_data)
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
 
