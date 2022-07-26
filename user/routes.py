@@ -38,7 +38,6 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         auth = access(**form.data)
-        print(auth)
         auth.store_in_session()
         user = get_current_user()
         user.store_in_session()
@@ -48,7 +47,6 @@ def login():
 
 @user_blueprint.route("/logout", methods=["GET"])
 def logout():
-    print("LOGOUT")
     session.clear()
     return redirect(url_for("index"))
 

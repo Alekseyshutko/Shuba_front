@@ -4,7 +4,7 @@ from user.utils import get_current_user
 from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
 import requests
-from order.utils import order_add, comment_add
+from order.utils import order_add, comment_add, photo_add, order_id
 
 order_blueprint = Blueprint(
     "order",
@@ -23,24 +23,18 @@ def add():
         user = get_current_user()
         user.store_in_session()
         form_data = dict(form.data)
-        form_data.pop("photo")
-        # print(request.form)
-
-        # print(request.files)
         form_data['date_finish'] = str(form_data["date_finish"])
-
-        photo = form.photo.data
-        link = upload_file_to_s3(photo)
-        # print(link)
-        form_data["photo"] = link
-        # print(form_data)
         form_data['speciality'] = list(form_data['speciality'])
         form_data['user'] = int(user.id)
-        # form_data = json.dumps(form_data)
-
-        # print(form_data)
-        order = order_add(**form_data)
-        # print(order)
+        order_add(**form_data)
+        if form_data['photo']:
+            form_data.pop("photo")
+            photo = form.photo.data
+            link = upload_file_to_s3(photo)
+            form_data["photo"] = link
+            form_data['order'] = order_id()
+            print(form_data)
+            photo_add(**form_data)
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
 
@@ -61,16 +55,25 @@ def repair():
 def one_order(id):
     var = requests.get(f"{API}/order/api/order/").json()
     order = var[id - 1]
-    com = requests.get(f'{API}/order/api/order_comments/').json()
-    comments = []
-    for i in range(len(com)):
-        if com[i]['order'] == order['id']:
-            comments.append(com[i])
-
     form = CommentForm()
     if form.validate_on_submit():
         user = get_current_user()
         user.store_in_session()
         form_data = dict(form.data)
+        form_data['user'] = int(user.id)
+        form_data['order'] = order['id']
+        form_data['is_active'] = True
         comment_add(**form_data)
-    return render_template("one_order.html", order=order, comments=comments, form=form)
+
+    com = requests.get(f'{API}/order/api/order_comments/').json()
+    comments = []
+    for i in range(len(com)):
+        if com[i]['order'] == order['id']:
+            comments.append(com[i])
+    photo = requests.get(f'{API}/order/api/orderphotos/').json()
+    pho = []
+    for i in range(len(photo)):
+        if photo[i]['order'] == order['id']:
+            pho.append(photo[i])
+
+    return render_template("one_order.html", order=order, comments=comments, form=form, pho=pho)
