@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FileField, StringField, DateField, SubmitField, EmailField
+from wtforms import FileField, StringField, DateField, SubmitField, EmailField, SelectMultipleField
 from wtforms.validators import DataRequired, EqualTo
 
 
@@ -18,7 +18,7 @@ class ExecutorForm(FlaskForm):
         ],
     )
 
-    phone_number = EmailField(
+    phone_number = StringField(
         "Номер телефона",
         validators=[
             DataRequired(),
@@ -32,11 +32,10 @@ class ExecutorForm(FlaskForm):
         ],
     )
 
-    speciality = StringField(
-        "специальность",
-        validators=[
-            DataRequired(),
-        ],
+    photo = FileField(
+        "photo",
+
     )
 
+    speciality = SelectMultipleField("специализация", choices=[('1', 'стройка'), ('2', 'уборка')])
     submit = SubmitField("Стать исполнителем")

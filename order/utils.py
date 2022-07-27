@@ -16,6 +16,7 @@ def order_add(*args, **kwargs) -> Order:
     res = requests.post(CREATE_ORDER, json=order_add.dict())
     # check_response_errors(res, 201)
     order = Order(**res.json())
+    print(order)
     return order
 
 def comment_add(*args, **kwargs) -> Comment:

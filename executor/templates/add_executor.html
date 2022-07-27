@@ -8,6 +8,8 @@
     <form action="{{ url_for('executor.add_executor') }}" method="POST" enctype="multipart/form-data">
         {{form.errors}}
         {{ form.hidden_tag() }}
+         <div>{{ form.speciality.label }}</div>
+        <div>{{ form.speciality }}</div>
         <div>{{ form.first_name.label }}</div>
         <div>{{ form.first_name }}</div>
         <div>{{ form.last_name.label }}</div>
@@ -16,8 +18,9 @@
         <div>{{ form.phone_number }}</div>
         <div>{{ form.city.label }}</div>
         <div>{{ form.city }}</div>
-        <div>{{ form.speciality.label }}</div>
-        <div>{{ form.speciality }}</div>
+         <div>{{ form.photo.label }}</div>
+        <div>{{ form.photo }}</div>
+
 
 
         <div>{{ form.submit }}</div>

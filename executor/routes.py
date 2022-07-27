@@ -1,8 +1,8 @@
 from flask import Blueprint, redirect, render_template, url_for, request
 from executor.forms import ExecutorForm
-from contact.utils import create_contact
 import requests
-
+from user.utils import get_current_user
+from executor.utils import create_executor
 
 executor_blueprint = Blueprint(
     "executor",
@@ -30,14 +30,18 @@ def exec():
 def add_executor():
     form = ExecutorForm()
     if form.validate_on_submit():
+        user = get_current_user()
+        user.store_in_session()
         form_data = dict(form.data)
+        form_data['speciality'] = list(form_data['speciality'])
+        form_data['user_id'] = int(user.id)
         form_data.pop("photo")
-        print(request.form)
-        print(request.files)
         photo = form.photo.data
-
-
-
+        from order.aws_utils import upload_file_to_s3
+        link = upload_file_to_s3(photo)
+        form_data["photo"] = link
         print(form_data)
+        create_executor(**form_data)
+
         return redirect(url_for("index"))
     return render_template("add_executor.html", form=form)
