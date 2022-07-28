@@ -72,6 +72,7 @@ def get_current_user() -> User:
 
 def create_user(*args, **kwargs) -> User:
     register_user = RegisterUser(**kwargs)
+    print(register_user.json())
     res = requests.post(CREATE_USER_URL, json=register_user.dict())
     # check_response_errors(res, 201)
     user = User(**res.json())

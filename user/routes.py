@@ -1,10 +1,9 @@
 import requests
 from flask import Blueprint, redirect, render_template, url_for, request, session
-from .utils import access, get_current_user, create_user
+from user.utils import access, get_current_user, create_user
 from user.form import RegisterUserForm, LoginForm
 from user.models import RegisterUser
-
-
+from user.permissions import login_required, profile_required
 
 user_blueprint = Blueprint(
     "user",
@@ -54,7 +53,12 @@ def logout():
 @user_blueprint.route('/me', methods=["GET", "POST"])
 def user():
     user = session.get("user")
+    order = requests.get(f"{API}/order/api/order/").json()
+    orderlist = []
+    for i in range(len(order)):
+        if order[i]['user'] == user['id']:
+            orderlist.append(order[i])
     if user is None:
         user = get_current_user()
         user.store_in_session()
-    return render_template('user.html', user=user)
+    return render_template('user.html', user=user, orderlist=orderlist)

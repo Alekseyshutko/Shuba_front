@@ -2,7 +2,7 @@
 
 <body>
 {% block content %}
-    {{ session["user"] }}
+
     <h1>ORDER</h1>
 
     <form action="{{ url_for('order.add') }}" method="POST" enctype="multipart/form-data">
@@ -18,8 +18,8 @@
         <div>{{ form.description }}</div>
         <div>{{ form.city.label }}</div>
         <div>{{ form.city }}</div>
-        <div>{{ form.phoneNumber.label }}</div>
-        <div>{{ form.phoneNumber }}</div>
+        <div>{{ form.phone_number.label }}</div>
+        <div>{{ form.phone_number }}</div>
         <div>{{ form.photo.label }}</div>
         <div>{{ form.photo }}</div>
         <div>{{ form.price.label }}</div>
