@@ -18,7 +18,7 @@ class OrderAdd(PyModel):
     description: str
     city: str
     name: str
-    phoneNumber: str
+    phone_number: str
     price: float
     date_finish: str
     speciality: list
@@ -37,7 +37,6 @@ class CommentAdd(PyModel):
     user: int
     is_active: bool
 
-
     class Config:
         extra = Extra.ignore
 
@@ -49,6 +48,9 @@ class Comment(PyModel):
 class AddPhoto(PyModel):
     order: int
     photo: str
+
+    class Config:
+        extra = Extra.ignore
 
 
 class Photo(PyModel):
