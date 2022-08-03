@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
+
+
 <body>
 {% block content %}
 {{ super() }}
 <h2 class="main-heading">Поиск работы</h2>
 <div class="wrapper">
 <sidebar class="sidebar">
-    <h4>Все категории</h4>
+
+ <div class="card-wrapper">
+     <div class="card">
+<a href="{{ url_for('order.repair') }}"><h4>Все категории</h4></a>
+     </div>
+ </div>
     <ul class="list-item">
+
         {% for c in b %}
         <h2>
             <a href="{{ url_for('order.repair') }}?speciality={{ c.id }}">{{ c.title }}</a>
@@ -17,7 +25,11 @@
 {% for p in a %}
     <div class="card-wrapper">
         <div class="card">
-        <h2> <a href="{{ url_for('order.one_order', id=p.id)}}">{{ p.title }} </a></h2>
+            {% if not session["user"] %}
+            <p>{{p.title}}<p>
+            {% else %}
+            <h2> <a href="{{ url_for('order.one_order', id=p.id)}}">{{ p.title }} </a></h2>
+            {% endif %}
         <p>{{p.description}}</p>
         <p>{{p.price}}</p>
     </div>
@@ -30,6 +42,7 @@
   <div id="footer">
       <p> 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
   </div>
-  </div>>
+  </div>
 {% endblock %}
 </body>>
+

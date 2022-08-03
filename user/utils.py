@@ -14,6 +14,22 @@ CURRENT_USER_URL = f"{Config.API_URL}/api/users/me/"
 CREATE_USER_URL = f"{Config.API_URL}/api/users/"
 
 
+def access_token_request(email, password):
+    req = requests.post(f"{Config.API_URL}/api/token/", json={
+        "email": email,
+        "password": password
+    })
+    req_data = req.json()
+    return req_data
+
+def refresh_token_request():
+    refresh_token = session["refresh"]
+    req = requests.post(f"{Config.API_URL}/token/refresh/", json={
+        "refresh": refresh_token
+    })
+    session["access"] = req.json()["access"]
+    session.modified = True
+
 def access(*args, **kwargs) -> Auth:
     login = Login(**kwargs)
     res = requests.post(LOGIN_URL, json=login.dict())
@@ -61,6 +77,38 @@ def request_with_auth(
     s = requests.Session()
     return s.send(r)
 
+
+def request_with_refresh(
+    method: str = None, url: str = None,
+    headers: dict = None, files: dict = None,
+    data: dict = None, json: dict = None,
+    **kwargs,
+) -> requests.Response:
+    res = request_with_auth(
+        method=method, url=url,
+        headers=headers, files=files,
+        data=data, json=json,
+        **kwargs
+    )
+    if res.status_code == 403:
+        refresh_token_request()
+        res = request_with_auth(
+            method=method, url=url,
+            headers=headers, files=files,
+            data=data, json=json,
+            **kwargs
+        )
+    return res
+
+def user_retrieve_request(user_id):
+    req = request_with_refresh("GET", f"{CREATE_USER_URL}{user_id}")
+    user_data = req.json()
+    return user_data
+
+def users_list_request():
+    req = request_with_refresh("GET", f"{CREATE_USER_URL}")
+    req_data = req.json()
+    return req_data
 
 def get_current_user() -> User:
     res = request_with_auth("GET", CURRENT_USER_URL)

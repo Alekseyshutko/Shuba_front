@@ -1,8 +1,10 @@
 from flask import Blueprint, redirect, render_template, url_for, request
-from executor.forms import ExecutorForm
+from executor.forms import ExecutorForm, CommentForm
 import requests
-from user.utils import get_current_user
-from executor.utils import create_executor
+from user.utils import get_current_user,user_retrieve_request
+from executor.utils import create_executor, executor_retriev, comment_add
+
+
 
 executor_blueprint = Blueprint(
     "executor",
@@ -45,3 +47,51 @@ def add_executor():
 
         return redirect(url_for("index"))
     return render_template("add_executor.html", form=form)
+
+
+@executor_blueprint.route("/<int:id>", methods=["GET", "POST"])
+def one_executor(id):
+    executor = executor_retriev(id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        user = user_retrieve_request(id)
+        # user.store_in_session()
+        form_data = dict(form.data)
+        form_data['user_id'] = int(id)
+        form_data['executor'] = executor['user_id']
+        form_data['user'] = form_data["user_id"]
+        form_data['is_active'] = True
+        comment_add(**form_data)
+
+    com = requests.get(f'{API}/api/executor_comments/').json()
+    comments = []
+    for i in range(len(com)):
+        if com[i]['executor'] == executor['user_id']:
+            comments.append(com[i])
+
+    return render_template("one_executor.html", executor=executor, comments=comments, form=form)
+
+
+# @executor_blueprint.route("/<int:id>", methods=["GET", "POST"])
+# def one_executor(id):
+#     executor = executor_retriev(id)
+#     form = CommentForm()
+#     if form.validate_on_submit():
+#         user = get_current_user()
+#         user.store_in_session()
+#         form_data = dict(form.data)
+#         form_data['user_id'] = int(user.id)
+#         form_data['user'] = form_data["user_id"]
+#         form_data['executor'] = executor['user_id']
+#         form_data['is_active'] = True
+#         print(form_data)
+#         comment_add(**form_data)
+#
+#     com = requests.get(f'{API}/api/executor_comments/').json()
+#     comments = []
+#     for i in range(len(com)):
+#         if com[i]['executor'] == executor['id']:
+#             comments.append(com[i])
+#
+#     return render_template("one_executor.html", executor=executor, comments=comments, form=form)
+

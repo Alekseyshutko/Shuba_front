@@ -39,3 +39,10 @@ class ExecutorForm(FlaskForm):
 
     speciality = SelectMultipleField("специализация", choices=[('1', 'стройка'), ('2', 'уборка')])
     submit = SubmitField("Стать исполнителем")
+
+
+class CommentForm(FlaskForm):
+    body = StringField("Ваш комментарий", validators=[
+        DataRequired(),
+    ], )
+    submit = SubmitField("Оставить комментарий")

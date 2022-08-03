@@ -5,7 +5,12 @@
 <h2 class="main-heading">Поиск исполнителей</h2>
 <div class="wrapper">
 <sidebar class="sidebar">
-    <h4>Все категории</h4>
+     <div class="card-wrapper">
+     <div class="card">
+<a href="{{ url_for('executor.exec') }}"><h4>Все категории</h4></a>
+     </div>
+ </div>
+
     <ul class="list-item">
         {% for c in b %}
         <h2>
@@ -17,7 +22,11 @@
 {% for p in a %}
     <div class="card-wrapper">
         <div class="card">
+            {% if not session["user"] %}
         <h2>{{ p.first_name }}</h2>
+            {% else %}
+            <h2> <a href="{{ url_for('executor.one_executor', id=p.user_id)}}">{{ p.first_name }} </a></h2>
+            {% endif %}
         <p>{{p.last_name}}</p>
         <p>{{p.city}}</p>
     </div>
