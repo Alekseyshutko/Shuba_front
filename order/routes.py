@@ -5,6 +5,14 @@ from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
 import requests
 from order.utils import order_add, comment_add, photo_add, order_id
+from config import Config
+
+
+CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
+SPECIALITY_ORDER = f"{Config.API_URL}/order/api/specialityorder/"
+CREATE_ORDER_COMENT = f'{Config.API_URL}/order/api/order_comments/'
+CREATE_ORDER_PHOTO = f'{Config.API_URL}/order/api/orderphotos/'
+
 
 order_blueprint = Blueprint(
     "order",
@@ -13,7 +21,6 @@ order_blueprint = Blueprint(
     static_folder="static",
     url_prefix="/order",
 )
-API = "http://127.0.0.1:8000"
 
 
 @order_blueprint.route("/add", methods=["GET", "POST"])
@@ -42,17 +49,17 @@ def add():
 def repair():
     filter_spec = request.args.get("speciality")
     if filter_spec:
-        a = requests.get(f"{API}/order/api/order/?speciality={filter_spec}").json()
+        a = requests.get(f"{Config.API_URL}/order/api/order/?speciality={filter_spec}").json()
     else:
-        a = requests.get(f"{API}/order/api/order/").json()
-    b = requests.get(f"{API}/order/api/specialityorder/").json()
+        a = requests.get(CREATE_ORDER).json()
+    b = requests.get(SPECIALITY_ORDER).json()
 
     return render_template("repair.html", a=a, b=b)
 
 
 @order_blueprint.route("/<int:id>", methods=["GET", "POST"])
 def one_order(id):
-    var = requests.get(f"{API}/order/api/order/").json()
+    var = requests.get(CREATE_ORDER).json()
     order = var[id - 1]
     form = CommentForm()
     if form.validate_on_submit():
@@ -64,12 +71,12 @@ def one_order(id):
         form_data['is_active'] = True
         comment_add(**form_data)
 
-    com = requests.get(f'{API}/order/api/order_comments/').json()
+    com = requests.get(CREATE_ORDER_COMENT).json()
     comments = []
     for i in range(len(com)):
         if com[i]['order'] == order['id']:
             comments.append(com[i])
-    photo = requests.get(f'{API}/order/api/orderphotos/').json()
+    photo = requests.get(CREATE_ORDER_PHOTO).json()
     pho = []
     for i in range(len(photo)):
         if photo[i]['order'] == order['id']:

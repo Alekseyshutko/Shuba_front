@@ -1,6 +1,6 @@
 import requests
 from flask import Blueprint, redirect, render_template, url_for, request, session
-from user.utils import access, get_current_user, create_user, access_token_request
+from user.utils import access, get_current_user, create_user
 from user.form import RegisterUserForm, LoginForm
 from user.models import RegisterUser
 from user.permissions import login_required, profile_required
@@ -13,6 +13,13 @@ user_blueprint = Blueprint(
     url_prefix="/user",
 )
 API = "http://127.0.0.1:8000"
+
+
+# def create_user(*args, **kwargs):
+#     register_user = RegisterUser(**kwargs)
+#     res = requests.post(f"{API}/api/users/register", json=register_user.dict())
+#     print(res)
+#     return res
 
 
 @user_blueprint.route("/register", methods=["GET", "POST"])
@@ -30,24 +37,15 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         auth = access(**form.data)
-        print(auth)
         auth.store_in_session()
         user = get_current_user()
         user.store_in_session()
-        tokens = access_token_request(
-            email=form.email.data,
-            password=form.password.data,
-        )
-        session["access"] = tokens["access"]
-        session["refresh"] = tokens["refresh"]
-        session.modified = True
         return redirect(url_for('index'))
     return render_template("login.html", form=form)
 
 
 @user_blueprint.route("/logout", methods=["GET"])
 def logout():
-    print("LOGOUT")
     session.clear()
     return redirect(url_for("index"))
 
@@ -57,11 +55,9 @@ def user():
     user = session.get("user")
     order = requests.get(f"{API}/order/api/order/").json()
     orderlist = []
-
     for i in range(len(order)):
         if order[i]['user'] == user['id']:
             orderlist.append(order[i])
-
     if user is None:
         user = get_current_user()
         user.store_in_session()

@@ -16,15 +16,12 @@ app.register_blueprint(contact_blueprint, url_prefix="/contact")
 app.register_blueprint(executor_blueprint, url_prefix="/executor")
 
 
-
 @app.route("/")
 def index():
     order = requests.get(f"{Config.API_URL}/order/api/order/").json()
     executor = requests.get(f"{Config.API_URL}/api/executor/").json()
     speciality = requests.get(f"{Config.API_URL}/api/speciality/").json()
     return render_template("index.html", order=order, executor=executor, speciality=speciality )
-
-
 
 
 

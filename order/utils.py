@@ -1,5 +1,3 @@
-import json
-
 import requests
 from config import Config
 from order.models import OrderAdd, Order, CommentAdd, Comment, AddPhoto, Photo
@@ -38,3 +36,5 @@ def photo_add(*args, **kwargs) -> Photo:
 def order_id(*args, **kwargs):
     orde = requests.get(CREATE_ORDER).json()[-1]['id']
     return orde
+
+
