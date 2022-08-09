@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, flash, url_for, abort
 from werkzeug.exceptions import HTTPException, Unauthorized, Forbidden
-from main import app
+from app import app
 from user.utils import refresh
 
 # from user.permissions import login_required, profile_required
