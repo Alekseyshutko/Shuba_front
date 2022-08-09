@@ -7,7 +7,7 @@ class RegisterExecutor(PyModel):
     last_name: str
     phone_number: str
     city: str
-    photo: str = None
+    photo: str
     speciality: list
 
     @validator('photo')
