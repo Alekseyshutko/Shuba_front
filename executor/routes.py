@@ -45,6 +45,7 @@ def add_executor():
         photo = form.photo.data
         from order.aws_utils import upload_file_to_s3
         link = upload_file_to_s3(photo)
+        print(link)
         form_data["photo"] = link
         print(form_data)
         create_executor(**form_data)
