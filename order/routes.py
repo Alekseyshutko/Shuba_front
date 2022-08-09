@@ -4,7 +4,7 @@ from user.utils import get_current_user
 from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
 import requests
-from order.utils import order_add, comment_add, photo_add, order_id
+from order.utils import order_add, comment_add, photo_add, order_id, order_retriev
 from config import Config
 
 
@@ -39,10 +39,11 @@ def add():
         form_data['user'] = int(user.id)
         order_add(**form_data)
         form_data['order'] = order_id()
-        s = json.dumps(form_data)
+        # s = json.dumps(form_data)
         photo_add(**form_data)
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
+
 
 
 @order_blueprint.route("/repair", methods=["GET", "POST"])
@@ -59,8 +60,9 @@ def repair():
 
 @order_blueprint.route("/<int:id>", methods=["GET", "POST"])
 def one_order(id):
-    var = requests.get(CREATE_ORDER).json()
-    order = var[id - 1]
+    order = order_retriev(id)
+    # var = requests.get(CREATE_ORDER).json()
+    # order = var[id - 1]
     form = CommentForm()
     if form.validate_on_submit():
         user = get_current_user()
