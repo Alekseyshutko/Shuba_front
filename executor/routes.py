@@ -53,29 +53,6 @@ def add_executor():
     return render_template("add_executor.html", form=form)
 
 
-# @executor_blueprint.route("/<int:id>", methods=["GET", "POST"])
-# def one_executor(user_id):
-#     executor = request.get(f"{Config.API_URL}/api/executor/{user_id}")
-#     form = CommentForm()
-#     if form.validate_on_submit():
-#         user = get_current_user()
-#         user.store_in_session()
-#         form_data = dict(form.data)
-#         form_data['user_id'] = int(id)
-#         form_data['executor'] = executor['user_id']
-#         form_data['user'] = form_data["user_id"]
-#         form_data['is_active'] = True
-#         comment_add(**form_data)
-#
-#     com = requests.get(EXECUTOR_COMENT).json()
-#     comments = []
-#     for i in range(len(com)):
-#         if com[i]['executor'] == executor['user_id']:
-#             comments.append(com[i])
-#
-#     return render_template("one_executor.html", executor=executor, comments=comments, form=form)
-#
-
 @executor_blueprint.route("/<int:id>", methods=["GET", "POST"])
 def one_executor(id):
     executor = executor_retriev(id)

@@ -13,7 +13,7 @@ app.register_blueprint(user_blueprint, url_prefix="/user")
 app.register_blueprint(order_blueprint, url_prefix="/order")
 app.register_blueprint(contact_blueprint, url_prefix="/contact")
 app.register_blueprint(executor_blueprint, url_prefix="/executor")
-
+app.config["SECRET_KEY"] = "12345678"
 
 @app.route("/")
 def index():
