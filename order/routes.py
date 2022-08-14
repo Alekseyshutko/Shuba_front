@@ -6,13 +6,13 @@ from order.aws_utils import upload_file_to_s3
 import requests
 from order.utils import order_add, comment_add, photo_add, order_id, order_retriev
 from config import Config
-
+import time
+import asyncio
 
 CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
 SPECIALITY_ORDER = f"{Config.API_URL}/order/api/specialityorder/"
 CREATE_ORDER_COMENT = f'{Config.API_URL}/order/api/order_comments/'
 CREATE_ORDER_PHOTO = f'{Config.API_URL}/order/api/orderphotos/'
-
 
 order_blueprint = Blueprint(
     "order",
@@ -24,7 +24,8 @@ order_blueprint = Blueprint(
 
 
 @order_blueprint.route("/add", methods=["GET", "POST"])
-def add():
+async def add():
+    start_time = time.time()
     form = OrderForm()
     if form.validate_on_submit():
         user = get_current_user()
@@ -37,13 +38,13 @@ def add():
         form_data["photo"] = link
         form_data['speciality'] = list(form_data['speciality'])
         form_data['user'] = int(user.id)
-        order_add(**form_data)
+        task1 = asyncio.create_task(order_add(**form_data))
         form_data['order'] = order_id()
-        # s = json.dumps(form_data)
-        photo_add(**form_data)
+        task2 = asyncio.create_task(photo_add(**form_data))
+        await task1
+        await task2
         return redirect(url_for("index"))
     return render_template("add.html", form=form)
-
 
 
 @order_blueprint.route("/repair", methods=["GET", "POST"])
@@ -85,3 +86,12 @@ def one_order(id):
             pho.append(photo[i])
 
     return render_template("one_order.html", order=order, comments=comments, form=form, pho=pho)
+
+
+# @order_blueprint.route("/update/<int:id>", methods=["GET", "POST"])
+# def update(id):
+#     form = OrderForm():
+
+@order_blueprint.route("/delete/<int:id>", methods=["DELETE"])
+def delete(id):
+    order = order_retriev(id)

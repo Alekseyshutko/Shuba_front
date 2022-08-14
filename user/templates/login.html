@@ -9,7 +9,17 @@
         {{ form.hidden_tag() }}
 
         <div>{{ form.email.label }}</div>
-        <div>{{ form.email }}</div>
+        {% if form.email.errors %}
+         {{ form.email(class="invalid") }}
+<span class="invalid-feedback">
+         {% for e in form.email.errors %}
+         {{ e }}
+         {% endfor %}
+</span>
+{% else %}
+         {{ form.email() }}
+{% endif %}
+
         <div>{{ form.password.label }}</div>
         <div>{{ form.password }}</div>
         <div>{{ form.submit }}</div>
