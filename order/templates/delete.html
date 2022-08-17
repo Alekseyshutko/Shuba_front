@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<body>
+{% block content %}
+
+    <h1>ORDER</h1>
+
+    <form action="{{ url_for('order.add') }}" method="POST" enctype="multipart/form-data">
+        {{form.errors}}
+        {{ form.hidden_tag() }}
+        <div>{{ form.speciality.label }}</div>
+        <div>{{ form.speciality}} </div>
+        <div>{{ form.name.label }}</div>
+        <div>{{ form.name }} </div>
+        <div>{{ form.title.label }}</div>
+        <div>{{ form.title }}</div>
+        <div>{{ form.description.label }}</div>
+        <div>{{ form.description }}</div>
+        <div>{{ form.city.label }}</div>
+        <div>{{ form.city }}</div>
+        <div>{{ form.phone_number.label }}</div>
+        <div>{{ form.phone_number }}</div>
+        <div>{{ form.photo.label }}</div>
+        <div>{{ form.photo }}</div>
+        <div>{{ form.price.label }}</div>
+        <div>{{ form.price }}</div>
+        <div>{{ form.date_finish.label }}</div>
+        <div>{{ form.date_finish }}</div>
+        <div>{{ form.submit }}</div>
+    </form>
+<form action="{{ url_for('order.order_delete', id=order.id) }}" method="GET" style="text-align: center"><button>Удалить заказ</button></form>
+<!--end frontpage-main-->
+<div id="featured-section">
+<div id="circles"><img class="first" src="static/images/clean1.png" /> <img src="static/images/built1.png" /> <img src="static/images/reparing.png" /> <img src="static/images/mover2.png" /> </div>
+  <div id="footer">
+      <p> 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
+  </div>
+  </div>>
+{% endblock %}
+</body>
+</html>

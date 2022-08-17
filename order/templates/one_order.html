@@ -3,7 +3,7 @@
 {% block content %}
 {{ super() }}
 
-<form action="{{ url_for('order.delete', id=p.id)}}" style="text-align: center"><button>Удалить заказ</button></form>
+<form action="{{ url_for('order.delete', id=order.id)}}" style="text-align: center"><button>Изменить или удалить заказ</button></form>
     <div class="card-wrapper">
         <div class="card">
         <h2> {{ order.title }} </h2>
