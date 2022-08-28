@@ -8,6 +8,7 @@ import asyncio
 CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
 CREATE_COMMENT = f"{Config.API_URL}/order/api/order_comments/"
 CREATE_PHOTO = f"{Config.API_URL}/order/api/orderphotos/"
+UPDATE_ORDER = f"{Config.API_URL}/order/api/detailorder/"
 
 
 async def order_add(*args, **kwargs) -> Order:
@@ -16,6 +17,19 @@ async def order_add(*args, **kwargs) -> Order:
     # check_response_errors(res, 201)
     order = Order(**res.json())
     print(order)
+    return order
+
+
+async def order_update(id2, *args, **kwargs) -> Order:
+    order_update = OrderAdd(**kwargs)
+    print(order_update.dict())
+    print(f"tyutgyu - {id2}")
+    UP = f"{UPDATE_ORDER}{id2}/"
+    res = requests.put(UP, json=order_update.dict())
+    print(UP)
+    print(res.json())
+    # check_response_errors(res, 201)
+    order = Order(**res.json())
     return order
 
 

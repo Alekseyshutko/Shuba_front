@@ -6,7 +6,7 @@ from user.utils import get_current_user
 from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
 import requests
-from order.utils import order_add, comment_add, photo_add, order_id, order_retriev
+from order.utils import order_add, comment_add, photo_add, order_id, order_retriev, order_update
 from config import Config
 import time
 import asyncio
@@ -99,6 +99,7 @@ async def delete(id):
         user = get_current_user()
         user.store_in_session()
         form_data = dict(form.data)
+        id2 = str(id)
         form_data.pop("photo")
         form_data['date_finish'] = str(form_data["date_finish"])
         photo = form.photo.data
@@ -106,8 +107,8 @@ async def delete(id):
         form_data["photo"] = link
         form_data['speciality'] = list(form_data['speciality'])
         form_data['user'] = int(user.id)
-        task3 = asyncio.create_task(order_add(**form_data))
         form_data['order'] = order_id()
+        task3 = asyncio.create_task(order_update(id2, **form_data))
         task4 = asyncio.create_task(photo_add(**form_data))
         await task3
         await task4

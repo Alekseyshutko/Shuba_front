@@ -5,7 +5,7 @@
 
     <h1>ORDER</h1>
 
-    <form action="{{ url_for('order.add') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url_for('order.delete', id=order.id) }}" method="POST" enctype="multipart/form-data">
         {{form.errors}}
         {{ form.hidden_tag() }}
         <div>{{ form.speciality.label }}</div>
