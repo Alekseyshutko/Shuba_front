@@ -90,6 +90,18 @@ def one_order(id):
 
     return render_template("one_order.html", order=order, comments=comments, form=form, pho=pho)
 
+@order_blueprint.route("/create/<int:id>", methods=["GET", "POST"])
+def create_oneorder(id):
+    order = order_retriev(id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        user = get_current_user()
+        user.store_in_session()
+        form_data = dict(form.data)
+        form_data['user'] = int(user.id)
+        form_data['order'] = order['id']
+        form_data['is_active'] = True
+
 
 @order_blueprint.route("/delete/<int:id>", methods=["GET", "POST"])
 async def delete(id):
@@ -118,11 +130,15 @@ async def delete(id):
 
 @order_blueprint.route("/delete/<int:id>/del", methods=["GET"])
 def order_delete(id):
+    user = session.get("user")
+    order = requests.get(f"{Config.API_URL}/order/api/order/").json()
+    if order['user'] == user['id']:
+        id2 = str(id)
+        DETAIL_ORDER2 = f'{DETAIL_ORDER}{id2}/'
+        try:
+            requests.delete(DETAIL_ORDER2)
+            return redirect(url_for('user.user'))
+        except:
+            return "Ошибка"
 
-    id2 = str(id)
-    DETAIL_ORDER2 = f'{DETAIL_ORDER}{id2}/'
-    try:
-        requests.delete(DETAIL_ORDER2)
-        return redirect(url_for('user.user'))
-    except:
-        return "Ошибка"
+

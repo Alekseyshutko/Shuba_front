@@ -3,6 +3,7 @@ from config import Config
 from order.models import OrderAdd, Order, CommentAdd, Comment, AddPhoto, Photo
 from user.utils import request_with_auth
 from user.utils import request_with_refresh
+from flask import session
 import asyncio
 
 CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
@@ -59,3 +60,8 @@ def order_retriev(user_id):
     req = request_with_refresh("GET", f"{Config.API_URL}/order/api/order/{user_id}")
     user_data = req.json()
     return user_data
+
+
+
+
+

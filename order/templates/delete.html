@@ -2,7 +2,7 @@
 
 <body>
 {% block content %}
-
+{{ super() }}
     <h1>ORDER</h1>
 
     <form action="{{ url_for('order.delete', id=order.id) }}" method="POST" enctype="multipart/form-data">
