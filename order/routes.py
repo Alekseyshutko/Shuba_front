@@ -120,7 +120,7 @@ async def delete(id):
     form.city.data = order["city"]
     form.phone_number.data = order["phone_number"]
     form.price.data = order["price"]
-    form.photo.data = photo["photo"]
+    #form.photo.data = photo["photo"]
 
     form.speciality.data = order["speciality"]
     return render_template("delete.html", form=form, order=order)
