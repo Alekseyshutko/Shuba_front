@@ -7,6 +7,7 @@ from order.utils import order_add, comment_add, photo_add, order_id, order_retri
 from config import Config
 import time
 import asyncio
+from order.models import Order
 
 CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
 SPECIALITY_ORDER = f"{Config.API_URL}/order/api/specialityorder/"
@@ -87,22 +88,13 @@ def one_order(id):
 
     return render_template("one_order.html", order=order, comments=comments, form=form, pho=pho)
 
-@order_blueprint.route("/create/<int:id>", methods=["GET", "POST"])
-def create_oneorder(id):
-    order = order_retriev(id)
-    form = CommentForm()
-    if form.validate_on_submit():
-        user = get_current_user()
-        user.store_in_session()
-        form_data = dict(form.data)
-        form_data['user'] = int(user.id)
-        form_data['order'] = order['id']
-        form_data['is_active'] = True
 
-
-@order_blueprint.route("/delete/<int:id>", methods=["GET", "POST"])
+@order_blueprint.route("/delete<int:id>", methods=["GET", "POST"])
 async def delete(id):
-    order = order_retriev(id)
+    # order = order_retriev(id)
+    order = requests.get(f"{Config.API_URL}/order/api/order/{id}").json()
+    photo = requests.get(f'{Config.API_URL}/order/api/orderphotos/{id}').json()
+
     form = OrderForm()
     if form.validate_on_submit():
         user = get_current_user()
@@ -122,6 +114,15 @@ async def delete(id):
         await task3
         await task4
         return redirect(url_for("index"))
+    form.title.data = order["title"]
+    form.description.data = order["description"]
+    form.name.data = order["name"]
+    form.city.data = order["city"]
+    form.phone_number.data = order["phone_number"]
+    form.price.data = order["price"]
+    form.photo.data = photo["photo"]
+
+    form.speciality.data = order["speciality"]
     return render_template("delete.html", form=form, order=order)
 
 

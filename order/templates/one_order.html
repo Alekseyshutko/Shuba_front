@@ -2,8 +2,8 @@
 <body>
 {% block content %}
 {{ super() }}
-{{ session['user'] }}
-{{ order.user}}
+
+
 {% if session['user'].id == order.user %}
 
 <form action="{{ url_for('order.delete', id=order.id)}}" style="text-align: center"><button>Изменить или удалить заказ</button></form> {}

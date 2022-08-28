@@ -1,9 +1,10 @@
 from datetime import datetime, date
 from typing import Optional
-from pydantic import BaseModel as PyModel, Extra
+from pydantic import BaseModel as PyModel, Extra, validator, ValidationError
+from user.models import StoreInSessionMixin
 
 
-class OrderAdd(PyModel):
+class OrderAdd(PyModel, StoreInSessionMixin):
     user: int
     title: str
     description: str
@@ -38,7 +39,13 @@ class Comment(PyModel):
 
 class AddPhoto(PyModel):
     order: int
-    photo: str
+    photo: str = None
+
+    @validator('photo')
+    def photo_is_some(cls, v):
+        if v is None:
+            raise ValidationError('Cannot set photo to None')
+        return str(v)
 
     class Config:
         extra = Extra.ignore
