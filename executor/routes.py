@@ -76,3 +76,8 @@ def one_executor(id):
 
     return render_template("one_executor.html", executor=executor, comments=comments, form=form)
 
+
+
+
+
+

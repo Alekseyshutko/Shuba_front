@@ -1,7 +1,4 @@
 from flask import Blueprint, redirect, render_template, url_for, request, session
-import json
-
-import user.routes
 from user.utils import get_current_user
 from order.forms import OrderForm, CommentForm
 from order.aws_utils import upload_file_to_s3
@@ -130,15 +127,13 @@ async def delete(id):
 
 @order_blueprint.route("/delete/<int:id>/del", methods=["GET"])
 def order_delete(id):
-    user = session.get("user")
-    order = requests.get(f"{Config.API_URL}/order/api/order/").json()
-    if order['user'] == user['id']:
-        id2 = str(id)
-        DETAIL_ORDER2 = f'{DETAIL_ORDER}{id2}/'
-        try:
-            requests.delete(DETAIL_ORDER2)
-            return redirect(url_for('user.user'))
-        except:
-            return "Ошибка"
-
-
+    # user = session.get("user")
+    # order = requests.get(f"{Config.API_URL}/order/api/order/").json()
+    # if order['user'] == user['id']:
+    id2 = str(id)
+    DETAIL_ORDER2 = f'{DETAIL_ORDER}{id2}/'
+    try:
+        requests.delete(DETAIL_ORDER2)
+        return redirect(url_for('user.user'))
+    except:
+        return "Ошибка"

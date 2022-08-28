@@ -63,3 +63,4 @@ class User(StoreInSessionMixin, BaseModel):
 
     is_active: bool = True
     is_superuser: bool = False
+    has_executor: bool = False

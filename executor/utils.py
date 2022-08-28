@@ -35,4 +35,3 @@ def comment_add(*args, **kwargs) -> Comment:
     # check_response_errors(res, 201)
     comment = Comment(**res.json())
     return comment
-

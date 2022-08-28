@@ -36,10 +36,3 @@ class CommentAdd(PyModel):
 
 class Comment(PyModel):
     pass
-
-
-
-
-
-
-
