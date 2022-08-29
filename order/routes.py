@@ -7,7 +7,7 @@ from order.utils import order_add, comment_add, photo_add, order_id, order_retri
 from config import Config
 import time
 import asyncio
-from order.models import Order
+
 
 CREATE_ORDER = f"{Config.API_URL}/order/api/order/"
 SPECIALITY_ORDER = f"{Config.API_URL}/order/api/specialityorder/"
@@ -91,7 +91,7 @@ def one_order(id):
 
 @order_blueprint.route("/delete<int:id>", methods=["GET", "POST"])
 async def delete(id):
-    # order = order_retriev(id)
+
     order = requests.get(f"{Config.API_URL}/order/api/order/{id}").json()
     photo = requests.get(f'{Config.API_URL}/order/api/orderphotos/{id}').json()
 

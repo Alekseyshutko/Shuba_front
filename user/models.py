@@ -58,9 +58,8 @@ class Auth(StoreInSessionMixin, BaseModel):
 
 
 class User(StoreInSessionMixin, BaseModel):
-
     email: str
-
     is_active: bool = True
     is_superuser: bool = False
     has_executor: bool = False
+

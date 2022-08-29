@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 <body>
 {% block content %}
-{{ super() }}
 
+
+{% if session['user'].id == executor.user_id %}
+
+<form action="{{ url_for('executor.create_executors', id=executor.user_id)}}" style="text-align: center"><button>Изменить или удалить заказ</button></form> {}
+{% endif %}
 
     <div class="card-wrapper">
         <div class="card">

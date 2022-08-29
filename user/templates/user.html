@@ -3,6 +3,7 @@
 <body>
 {% block content %}
 
+
     <h1>{{ user.email }}</h1>
     <h2>Мои заказы</h2>
         {% for p in orderlist %}
@@ -16,11 +17,18 @@
 
 
 <form action="{{ url_for('order.add')}}" style="text-align: center"><button>Оставить заказ</button></form>
+{% if e == False %}
+<form action="{{ url_for('executor.add_executor')}}" style="text-align: center"><button>Стать исполнителем </button></form>
+{% else %}
+<form action="{{ url_for('executor.create_executors', id=executorlist[0].user_id)}}" style="text-align: center"><button>Я исполнитель </button></form>
 
-        <form action="{{ url_for('executor.add_executor')}}" style="text-align: center"><button>Стать исполнителем</button></form>
 
 
 
+
+
+
+        {% endif %}
 
 <!--end frontpage-main-->
 <div id="featured-section">

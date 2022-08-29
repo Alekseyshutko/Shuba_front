@@ -16,14 +16,6 @@ user_blueprint = Blueprint(
 )
 
 
-
-# def create_user(*args, **kwargs):
-#     register_user = RegisterUser(**kwargs)
-#     res = requests.post(f"{API}/api/users/register", json=register_user.dict())
-#     print(res)
-#     return res
-
-
 @user_blueprint.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterUserForm()
@@ -56,11 +48,19 @@ def logout():
 def user():
     user = session.get("user")
     order = requests.get(f"{Config.API_URL}/order/api/order/").json()
+    executor = requests.get(f"{Config.API_URL}/api/executor/").json()
     orderlist = []
+    executorlist= []
+    e = False
     for i in range(len(order)):
         if order[i]['user'] == user['id']:
             orderlist.append(order[i])
+    for j in range(len(executor)):
+        if executor[j]['user_id'] == user['id']:
+            executorlist.append(executor[j])
+            e = True
+    print(executorlist)
     if user is None:
         user = get_current_user()
         user.store_in_session()
-    return render_template('user.html', user=user, orderlist=orderlist)
+    return render_template('user.html', user=user, orderlist=orderlist, executorlist=executorlist, e=e)

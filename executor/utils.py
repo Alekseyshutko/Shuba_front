@@ -35,3 +35,12 @@ def comment_add(*args, **kwargs) -> Comment:
     # check_response_errors(res, 201)
     comment = Comment(**res.json())
     return comment
+
+
+def update_executor(id2, *args, **kwargs):
+    ex_update = RegisterExecutor(**kwargs)
+    res = requests.put(f'{Config.API_URL}/api/detailexecutor/{id2}/', json=ex_update.dict())
+    print(res.json())
+    executor = Executor(**res.json())
+    print(executor)
+    return executor

@@ -1,4 +1,4 @@
-from pydantic import BaseModel as PyModel, EmailStr, Extra, validator, Field
+from pydantic import BaseModel as PyModel, EmailStr, Extra, validator, Field, ValidationError
 
 
 class RegisterExecutor(PyModel):
@@ -7,13 +7,13 @@ class RegisterExecutor(PyModel):
     last_name: str
     phone_number: str
     city: str
-    photo: str
+    photo: str = None
     speciality: list
 
     @validator('photo')
     def size_is_some(cls, v):
         if v is None:
-            raise ValueError('Cannot set photo to None')
+            raise ValidationError('Cannot set photo to None')
         return str(v)
 
     class Config:

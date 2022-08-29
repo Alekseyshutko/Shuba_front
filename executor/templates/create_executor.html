@@ -2,10 +2,16 @@
 
 <body>
 {% block content %}
-    {{ super() }}
+{{ super() }}
 
 
-    <form action="{{ url_for('executor.add_executor') }}" method="POST" enctype="multipart/form-data">
+<h1>Executor</h1>
+
+<form action="{{ url_for('executor.create_executors', id=executor.user_id) }}" method="POST" enctype="multipart/form-data">
+
+
+
+
         {{form.errors}}
         {{ form.hidden_tag() }}
          <div>{{ form.speciality.label }}</div>
@@ -20,11 +26,12 @@
         <div>{{ form.city }}</div>
          <div>{{ form.photo.label }}</div>
         <div>{{ form.photo }}</div>
-
-
-
         <div>{{ form.submit }}</div>
     </form>
+
+
+<form action="{{ url_for('executor.delete_executor', id=executor.user_id) }}" method="GET" style="text-align: center"><button>Удалить</button></form>
+
 <!--end frontpage-main-->
 <div id="featured-section">
 <div id="circles"><img class="first" src="static/images/clean1.png" /> <img src="static/images/built1.png" /> <img src="static/images/reparing.png" /> <img src="static/images/mover2.png" /> </div>
